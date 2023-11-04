@@ -148,7 +148,7 @@ public class Matrix {
         return 0;
     }
 
-    // переменные для использования нахождений в матрицах 4х4, 5х5 и 6х6
+    // переменные для использования нахождений в матрицах 4х4, 5х5
     private int determinant3x3(int[][] minor) {
         return matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1])
                 - matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0])
@@ -157,32 +157,32 @@ public class Matrix {
 
     private int determinant4x4(int[][] minor) {
         int det = 0;
-        for (int i = 0; i < rows; i++) {
+        for (int i = 0; i < 3; i++) { // rows 3
             int[][] minor4 = new int[3][3];
-            for (int j = 1; j < rows; j++) {
+            for (int j = 1; j < 4; j++) { // rows 4
                 int minorCol = 0;
-                for (int k = 0; k < cols; k++) {
+                for (int k = 0; k < 3; k++) { // cols 3
                     if (k != i) {
-                        minor4[j - 1][minorCol] = matrix[j][k];
+                        minor4[j - 1][minorCol] = minor[j][k];
                         minorCol++;
                     }
                 }
             }
             int sign = (i % 2 == 0) ? 1 : -1;
-            det += sign * matrix[0][i] * determinant3x3(minor4);
+            det += sign * minor[0][i] * determinant3x3(minor4);
         }
         return det;
     }
 
     private int determinant5x5(int[][] minor) {
         int det = 0;
-        for (int i = 0; i < rows; i++) {
+        for (int i = 0; i < 5; i++) { // rows 5
             int[][] minor5 = new int[4][4];
-            for (int j = 1; j < rows; j++) {
+            for (int j = 1; j < 5; j++) { // rows 5
                 int minorCol = 0;
-                for (int k = 0; k < cols; k++) {
+                for (int k = 0; k < 4; k++) { // cols 4
                     if (k != i) {
-                        minor5[j - 1][minorCol] = matrix[j][k];
+                        minor5[j - 1][minorCol] = minor[j][k];
                         minorCol++;
                     }
                 }
@@ -192,6 +192,7 @@ public class Matrix {
         }
         return det;
     }
+
 
     // ранг матрицы
     public void rankMatrix() {
